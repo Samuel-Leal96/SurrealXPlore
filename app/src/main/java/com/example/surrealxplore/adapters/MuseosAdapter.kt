@@ -1,9 +1,6 @@
-package com.example.surrealxplore.data.adapters
+package com.example.surrealxplore.adapters
 
 import android.content.Context
-import android.content.res.Configuration
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,8 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.surrealxplore.data.entity.MuseoEntity
 import com.example.surrealxplore.databinding.MuseoItemBinding
+import com.example.surrealxplore.interfaces.onClick
 
-class CiudadVallesAdapter(val context: Context) : ListAdapter<MuseoEntity, CiudadVallesAdapter.ViewHolder>(
+class MuseosAdapter(val context: Context, private val onClick: onClick) : ListAdapter<MuseoEntity, MuseosAdapter.ViewHolder>(
     DiffCallback
 ) {
 
@@ -48,18 +46,9 @@ class CiudadVallesAdapter(val context: Context) : ListAdapter<MuseoEntity, Ciuda
             binding.tvUbicacionMuseo.text = museo.calle + museo.colonia + museo.cp
             binding.ivMuseo.setImageResource(museo.imagen[0])
 
-            /*binding.tvNombreServicio.text = servicio.nombre_servicio
-
-            val decodeByte = Base64.decode(servicio.icon, Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.size)
-
-            binding.ivServicio.setImageBitmap(bitmap)
-
-            with(binding.root){
-                setOnClickListener {
-                    Firebase.analytics.logEvent(listenerServicioFirebase, Bundle())
-                    listener.showAccesoDirecto(servicio.nombre_servicio,servicio.informacion, servicio.url, servicio.webview) }
-            }*/
+            binding.lyMuseo.setOnClickListener {
+                onClick.descripcionMuseo(museo.nombre)
+            }
 
         }
     }
