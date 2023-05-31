@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gold">#DF9D2B</color>
     <color name="gold_subtitle">#E6FCC15C</color>
+    <color name="black_theme_background">#201F1F</color>
 </resources>

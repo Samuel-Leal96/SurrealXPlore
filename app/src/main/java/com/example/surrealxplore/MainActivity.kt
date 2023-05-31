@@ -1,7 +1,9 @@
 package com.example.surrealxplore
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.surrealxplore.data.MuseoApp
 import com.example.surrealxplore.data.entity.MuseoDao
@@ -29,6 +31,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.black))
+                binding.tvXilitla.setTextColor(getColor(R.color.gold_subtitle))
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.white))
+
+                binding.tvXilitla.setTextColor(getColor(R.color.gold_subtitle))
+            }
+        }
 
         myApp = applicationContext as MuseoApp
         museoDao = myApp.museoDao.MuseoDao()
@@ -37,9 +50,8 @@ class MainActivity : AppCompatActivity() {
         llenarBaseDeDatos()
 
         lifecycleScope.launch {
-            delay(1500)
+            delay(1700)
                 mostrarMuseos()
-
         }
 
     }
@@ -203,8 +215,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun irACiudadVallesFragment() {
 
-        binding.tvCiudadValles.setTextColor(getColor(R.color.black))
-        binding.tvXilitla.setTextColor(getColor(R.color.gold_subtitle))
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.black))
+                binding.tvXilitla.setTextColor(getColor(R.color.gold_subtitle))
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.white))
+                binding.tvXilitla.setTextColor(getColor(R.color.gold_subtitle))
+            }
+        }
 
         val frgCiudadValles = supportFragmentManager.beginTransaction()
         frgCiudadValles.replace(R.id.contenedorMuseos, CiudadVallesFragment())
@@ -213,8 +233,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun irAXilitlaFragment() {
 
-        binding.tvCiudadValles.setTextColor(getColor(R.color.gold_subtitle))
-        binding.tvXilitla.setTextColor(getColor(R.color.black))
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.gold_subtitle))
+                binding.tvXilitla.setTextColor(getColor(R.color.black))
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                binding.tvCiudadValles.setTextColor(getColor(R.color.gold_subtitle))
+                binding.tvXilitla.setTextColor(getColor(R.color.white))
+            }
+        }
 
         val frgXilitla = XilitlaFragment()
         supportFragmentManager.beginTransaction()
