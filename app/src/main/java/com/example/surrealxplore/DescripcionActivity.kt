@@ -1,51 +1,91 @@
 package com.example.surrealxplore
 
+import android.R
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.core.view.isGone
+import androidx.lifecycle.lifecycleScope
+import com.example.surrealxplore.data.MuseoApp
+import com.example.surrealxplore.data.entity.MuseoDao
+import com.example.surrealxplore.data.entity.MuseoEntity
 import com.example.surrealxplore.databinding.ActivityDescripcionBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+
 
 class DescripcionActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDescripcionBinding
+
+    private lateinit var myApp: MuseoApp
+    private lateinit var museoDao: MuseoDao
 
     var name: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
-        name = intent.extras?.getString("name")
-
-        Toast.makeText(this, name, Toast.LENGTH_LONG).show()
-
         binding = ActivityDescripcionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
+        //Obtenemos el nombre del museo enviado por la interfaz
+        name = intent.extras?.getString("name")
 
-        val navController = findNavController(R.id.nav_host_fragment_content_descripcion)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        myApp = applicationContext as MuseoApp
+        museoDao = myApp.museoDao.MuseoDao()
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                val museo = museoDao.obtenerMuseosPorNombre(name.toString())
+
+                withContext(Dispatchers.Main){
+                    mostrarDescripcion(museo)
+                }
+            }
         }
+
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_descripcion)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+    fun mostrarDescripcion(museoObjeto: List<MuseoEntity>) {
+        val museo = museoObjeto[0]
+
+        //Instanciamos las variables para obtener la info de la base de datos
+        val imagenes = museo.imagen
+        val nombre = museo.nombre
+        val descripcion = museo.descripcion
+        val ubicacion = "${museo.calle}\n${museo.colonia}\n${museo.cp}\n${museo.ciudad}\n${museo.estado}\n"
+        val horarios = museo.horario
+        val fechaFundacion = museo.fecha_fundacion
+        val servicios = museo.servicios
+        val telefono = museo.telefono
+        var carousel: ImageCarousel = binding.carousel
+
+        //Mostramos la info en la vista xml
+        binding.imgCabecera.setImageResource(imagenes[0])
+        binding.tvNombreMuseo.text = nombre
+        binding.tvDescripcion.text = descripcion
+        binding.tvUbicacionMuseo.text = ubicacion
+        binding.tvHorarios.text = horarios
+        binding.tvServicios.text = servicios
+        binding.tvTelefono.text = telefono
+        binding.tvFechaFundacion.text = fechaFundacion
+
+
+        //Configuracion del carousel de imagenes
+        val list = mutableListOf<CarouselItem>()
+
+        imagenes.forEach {
+            list.add(
+                CarouselItem(
+                    it
+                )
+            )
+        }
+        carousel.addData(list)
     }
+
 }

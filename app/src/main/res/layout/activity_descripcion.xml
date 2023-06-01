@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,27 +8,293 @@
     android:fitsSystemWindows="true"
     tools:context=".DescripcionActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbarSize="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="match_parent">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <ImageView
+                android:id="@+id/imgCabecera"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                tools:src="@drawable/james1"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
-    <include layout="@layout/content_descripcion" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="20dp"
+                app:layout_constraintTop_toBottomOf="@id/imgCabecera"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    >
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    <TextView
+                        android:id="@+id/tvNombreMuseo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Museo de eduard James" />
+
+                    <TextView
+                        android:id="@+id/tvDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:padding="10dp"
+                        android:justificationMode="inter_word"
+                        tools:text="El museo forma parte del conjunto que alberga el Centro Cultural de la Huasteca. Su acervo se conformó con piezas encontradas en las zonas arqueológicas de Tamtoc y Tamohi. Cuenta con una sala arqueológica, donde se puede observar una colección de piezas que fueron encontradas principalmente en los sitios ya mencionados, como la reproducción del Adolescente Huasteco. En la sala etnográfica las piezas están agrupadas por temas: vestuario y textiles, música y danza y objetos de uso común, como ceremoniales, instrumentos de labranza, entre otras piezas.
+                    \nCuenta con una colección arqueológica, histórica y etnográfica de la cultura huasteca. Destaca el importante acervo de instrumentos musicales de la región."
+                        app:layout_constraintTop_toBottomOf="@id/tvNombreMuseo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvSeccionFechaFundacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha de fundación"
+                        android:drawablePadding="10dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginEnd="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:drawableStartCompat="@drawable/ic_calendar" />
+
+                    <TextView
+                        android:id="@+id/tvFechaFundacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tvSeccionFechaFundacion"
+                        app:layout_constraintTop_toBottomOf="@id/tvSeccionFechaFundacion"
+                        tools:text="23 de enero de 1997" />
+
+                    <LinearLayout
+                        android:id="@+id/containerUbiTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+
+                        app:layout_constraintTop_toBottomOf="@id/tvFechaFundacion"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Ubicación"
+                                android:textStyle="bold"
+                                android:drawablePadding="10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:drawableStartCompat="@drawable/ic_location" />
+                            <TextView
+                                android:id="@+id/tvUbicacionMuseo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:paddingHorizontal="10dp"
+                                tools:text="Carr. México-Laredo y Libramiento Sur \n Fracc. Lomas de San José \n CP 79090 \n Ciudad Valles \n San Luis Potosí"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Horarios"
+                                android:textStyle="bold"
+                                android:drawablePadding="10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:drawableStartCompat="@drawable/ic_time" />
+
+                            <TextView
+                                android:id="@+id/tvHorarios"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:paddingHorizontal="10dp"
+                                tools:text="Abierto al público de lunes a viernes de 9 a 17 hrs.\n sábado y domingo cerrado"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerServPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        app:layout_constraintTop_toBottomOf="@id/containerUbiTime"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/tvSeccionServicios"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="2dp"
+                                android:drawableStart="@drawable/ic_service"
+                                android:text="Servicios"
+                                android:drawablePadding="10dp"
+                                app:layout_constraintTop_toBottomOf="@id/containerUbiTime"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvServicios"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="14sp"
+                                tools:text="Biblioteca\nSalón de conferencias\nVisitas guiadas"
+
+                                app:layout_constraintTop_toBottomOf="@id/tvSeccionServicios"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Telefono"
+                                android:drawablePadding="10dp"
+                                android:textStyle="bold"
+                                android:textSize="16sp"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:drawableStartCompat="@drawable/ic_contact_phone" />
+
+                            <TextView
+                                android:id="@+id/tvTelefono"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_marginTop="5dp"
+                                android:paddingHorizontal="10dp"
+                                tools:text="Tels.: (481) 381 14 48, 382 18 32, 381 50 00"
+                                app:layout_constraintTop_toBottomOf="@id/tvDescripcion"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginHorizontal="10dp"
+                        app:cardCornerRadius="15dp"
+                        app:layout_constraintTop_toBottomOf="@id/containerServPhone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                            android:id="@+id/carousel"
+                            android:layout_width="match_parent"
+                            android:layout_height="239dp"
+                            app:autoPlay="true"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/containerServPhone"
+                            app:showNavigationButtons="false" />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
